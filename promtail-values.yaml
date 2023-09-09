@@ -426,8 +426,7 @@ config:
     pipelineStages:
       - cri: {}
       - regex:
-          expression: "^(?P<msg>.*)"
-          source: msg
+          expression: 'msg="(?P<log_message>[^"]+)"'
     common:
       #- action: replace
       #  source_labels:
