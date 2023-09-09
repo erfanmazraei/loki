@@ -493,6 +493,7 @@ config:
     extraRelabelConfigs: []
 
     scrapeConfigs: |
+      # See also https://github.com/grafana/loki/blob/master/production/ksonnet/promtail/scrape_config.libsonnet for reference
       #- job_name: monitoring/redis-exporter
       #  pipeline_stages:
       #    {{- toYaml .Values.config.snippets.pipelineStages | nindent 4 }}
@@ -501,7 +502,7 @@ config:
       #  relabel_configs:
       #    - source_labels:
       #        - __meta_kubernetes_pod_label_app
-      #      regex: '(msg)=(.*)'
+      #      regex: msg
       #      action: replace
       #      target_label: __tmp_pod_label_app
 
