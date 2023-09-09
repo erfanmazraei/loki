@@ -483,9 +483,11 @@ config:
     extraScrapeConfigs: |
       - job_name: monitoring/redis-exporter
         pipeline_stages:
+          - cri: {}
+        kubernetes_sd_configs:
+          - role: pod
         - match: |
             selector: '{job="monitoring/redis-exporter"}'
-            target_label: msg
             stages:
             - json:
                 experssions:
