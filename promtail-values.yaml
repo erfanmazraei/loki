@@ -425,7 +425,7 @@ config:
   snippets:
     pipelineStages:
       - regex:
-          expression: 'msg="(?P<log_message>[^"]+)"'
+          expression: '(msg)=(.*)'
     common:
       #- action: replace
       #  source_labels:
