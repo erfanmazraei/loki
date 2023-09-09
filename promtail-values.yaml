@@ -426,10 +426,10 @@ config:
     pipelineStages:
       - cri: {}
     common:
-      - action: replace
-        source_labels:
-          - __meta_kubernetes_pod_label_app
-        target_label: msg
+      #- action: replace
+      #  source_labels:
+      #    - __meta_kubernetes_pod_label_app
+      #  target_label: msg
 
       - action: replace
         source_labels:
@@ -493,18 +493,26 @@ config:
     extraRelabelConfigs: []
 
     scrapeConfigs: |
-      - job_name: monitoring/redis-exporter
+      #- job_name: monitoring/redis-exporter
+      #  pipeline_stages:
+      #    {{- toYaml .Values.config.snippets.pipelineStages | nindent 4 }}
+      #  kubernetes_sd_configs:
+      #    - role: pod
+      #  relabel_configs:
+      #    - source_labels:
+      #        - __meta_kubernetes_pod_label_app
+      #      regex: '(msg)=(.*)'
+      #      action: replace
+      #      target_label: __tmp_pod_label_app
+      - job_name: redis-exporter
         pipeline_stages:
-          {{- toYaml .Values.config.snippets.pipelineStages | nindent 4 }}
-        kubernetes_sd_configs:
-          - role: pod
-        relabel_configs:
-          - source_labels:
-              - __meta_kubernetes_pod_label_app
-            regex: '(msg)=(.*)'
-            action: replace
-            target_label: __tmp_pod_label_app
-
+        - match:
+            pipeline_name: "redis-exporter"
+            selector: '{app="redis-exporter"}'
+            action: keep
+            stages:
+            - regex:
+              expression: '(msg)=(.*)'
 
       - job_name: kubernetes-pods
         pipeline_stages:
