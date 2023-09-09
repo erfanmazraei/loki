@@ -479,13 +479,13 @@ ingester:
       # @notationType -- list
     claims:
       - name: data
-        size: 10Gi
+        size: 1Gi
         #   -- Storage class to be used.
         #   If defined, storageClassName: <storageClass>.
         #   If set to "-", storageClassName: "", which disables dynamic provisioning.
         #   If empty or set to null, no storageClassName spec is
         #   set, choosing the default provisioner (gp2 on AWS, standard on GKE, AWS, and OpenStack).
-        storageClass: null
+        storageClass: nfs-client
       # - name: wal
       #   size: 150Gi
 
@@ -682,15 +682,15 @@ querier:
   dnsConfig: {}
   persistence:
     # -- Enable creating PVCs for the querier cache
-    enabled: false
+    enabled: true
     # -- Size of persistent disk
-    size: 10Gi
+    size: 1Gi
     # -- Storage class to be used.
     # If defined, storageClassName: <storageClass>.
     # If set to "-", storageClassName: "", which disables dynamic provisioning.
     # If empty or set to null, no storageClassName spec is
     # set, choosing the default provisioner (gp2 on AWS, standard on GKE, AWS, and OpenStack).
-    storageClass: null
+    storageClass: nfs-client
     # -- Annotations for querier PVCs
     annotations: {}
   # -- Adds the appProtocol field to the querier service. This allows querier to work with istio protocol selection.
@@ -1326,15 +1326,15 @@ compactor:
     grpc: ""
   persistence:
     # -- Enable creating PVCs for the compactor
-    enabled: false
+    enabled: true
     # -- Size of persistent disk
-    size: 10Gi
+    size: 1Gi
     # -- Storage class to be used.
     # If defined, storageClassName: <storageClass>.
     # If set to "-", storageClassName: "", which disables dynamic provisioning.
     # If empty or set to null, no storageClassName spec is
     # set, choosing the default provisioner (gp2 on AWS, standard on GKE, AWS, and OpenStack).
-    storageClass: null
+    storageClass: nfs-client
     # -- Annotations for compactor PVCs
     annotations: {}
   serviceAccount:
@@ -1567,17 +1567,17 @@ indexGateway:
   tolerations: []
   persistence:
     # -- Enable creating PVCs which is required when using boltdb-shipper
-    enabled: false
+    enabled: true
     # -- Use emptyDir with ramdisk for storage. **Please note that all data in indexGateway will be lost on pod restart**
     inMemory: false
     # -- Size of persistent or memory disk
-    size: 10Gi
+    size: 1Gi
     # -- Storage class to be used.
     # If defined, storageClassName: <storageClass>.
     # If set to "-", storageClassName: "", which disables dynamic provisioning.
     # If empty or set to null, no storageClassName spec is
     # set, choosing the default provisioner (gp2 on AWS, standard on GKE, AWS, and OpenStack).
-    storageClass: null
+    storageClass: nfs-client
     # -- Annotations for index gateway PVCs
     annotations: {}
 
@@ -1699,15 +1699,15 @@ memcachedChunks:
   tolerations: []
   persistence:
     # -- Enable creating PVCs which will persist cached data through restarts
-    enabled: false
+    enabled: true
     # -- Size of persistent or memory disk
-    size: 10Gi
+    size: 1Gi
     # -- Storage class to be used.
     # If defined, storageClassName: <storageClass>.
     # If set to "-", storageClassName: "", which disables dynamic provisioning.
     # If empty or set to null, no storageClassName spec is
     # set, choosing the default provisioner (gp2 on AWS, standard on GKE, AWS, and OpenStack).
-    storageClass: null
+    storageClass: nfs-client
   # -- List of additional PVCs to be created for the memcached-chunks statefulset
   volumeClaimTemplates: []
   # -- List of additional volumes to be mounted for the memcached-chunks statefulset
@@ -1768,15 +1768,15 @@ memcachedFrontend:
   tolerations: []
   persistence:
     # -- Enable creating PVCs which will persist cached data through restarts
-    enabled: false
+    enabled: true
     # -- Size of persistent or memory disk
-    size: 10Gi
+    size: 1Gi
     # -- Storage class to be used.
     # If defined, storageClassName: <storageClass>.
     # If set to "-", storageClassName: "", which disables dynamic provisioning.
     # If empty or set to null, no storageClassName spec is
     # set, choosing the default provisioner (gp2 on AWS, standard on GKE, AWS, and OpenStack).
-    storageClass: null
+    storageClass: nfs-client
 
 memcachedIndexQueries:
   # -- Specifies whether the Memcached index queries cache should be enabled
@@ -1833,15 +1833,15 @@ memcachedIndexQueries:
   tolerations: []
   persistence:
     # -- Enable creating PVCs which will persist cached data through restarts
-    enabled: false
+    enabled: true
     # -- Size of persistent or memory disk
-    size: 10Gi
+    size: 1Gi
     # -- Storage class to be used.
     # If defined, storageClassName: <storageClass>.
     # If set to "-", storageClassName: "", which disables dynamic provisioning.
     # If empty or set to null, no storageClassName spec is
     # set, choosing the default provisioner (gp2 on AWS, standard on GKE, AWS, and OpenStack).
-    storageClass: null
+    storageClass: nfs-client
 
 memcachedIndexWrites:
   # -- Specifies whether the Memcached index writes cache should be enabled
@@ -1898,15 +1898,15 @@ memcachedIndexWrites:
   tolerations: []
   persistence:
     # -- Enable creating PVCs which will persist cached data through restarts
-    enabled: false
+    enabled: true
     # -- Size of persistent or memory disk
-    size: 10Gi
+    size: 1Gi
     # -- Storage class to be used.
     # If defined, storageClassName: <storageClass>.
     # If set to "-", storageClassName: "", which disables dynamic provisioning.
     # If empty or set to null, no storageClassName spec is
     # set, choosing the default provisioner (gp2 on AWS, standard on GKE, AWS, and OpenStack).
-    storageClass: null
+    storageClass: nfs-client
 
 networkPolicy:
   # -- Specifies whether Network Policies should be created
