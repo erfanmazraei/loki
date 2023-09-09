@@ -480,7 +480,16 @@ config:
 
     # -- You can put here any additional scrape configs you want to add to the config file.
     # @default -- empty
-    extraScrapeConfigs: ""
+    extraScrapeConfigs: |
+      - job_name: redis-exporter
+        pipeline_stages:
+        - match: |
+            selector: '{job="redis-exporter"}'
+            stages:
+            - json:
+                experssions:
+                  - msg
+
 
     # -- You can put here any additional relabel_configs to "kubernetes-pods" job
     extraRelabelConfigs: []
