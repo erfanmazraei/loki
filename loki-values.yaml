@@ -1946,5 +1946,5 @@ networkPolicy:
     # As this is cross-namespace communication, you also need the namespaceSelector.
     podSelector: {}
     # -- Specifies the namespace the discovery Pods are running in
-    namespaceSelector: {}
+    namespaceSelector: monitoring
 
