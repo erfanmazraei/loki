@@ -489,7 +489,7 @@ config:
         relabel_configs:
           - source_labels:
               - __meta_kubernetes_pod_label_app
-            regex: *msg*
+            regex: *
             action: replace
             target_label: msg
 
