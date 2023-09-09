@@ -427,10 +427,6 @@ config:
       - cri: {}
     common:
       - action: replace
-          source_labels:
-            - __meta_kubernetes_pod_msg
-          target_label: msg
-      - action: replace
         source_labels:
           - __meta_kubernetes_pod_node_name
         target_label: node_name
@@ -497,11 +493,6 @@ config:
         kubernetes_sd_configs:
           - role: pod
         relabel_configs:
-          - source_labels:
-              __meta_kubernetes_pod_msg
-            regex: msg
-            action: replace
-            target_label: __tmp_pod_msg
           - source_labels:
               - __meta_kubernetes_pod_controller_name
             regex: ([0-9a-z-.]+?)(-[0-9a-f]{8,10})?
