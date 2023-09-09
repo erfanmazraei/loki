@@ -425,11 +425,14 @@ config:
   snippets:
     pipelineStages:
       - cri: {}
+      - regex:
+          expression: "^(?P<msg>.*)"
+          source: msg
     common:
-      - action: replace
-        source_labels:
-          - __meta_kubernetes_pod_label_app
-        target_label: msg
+      #- action: replace
+      #  source_labels:
+      #    - __meta_kubernetes_pod_label_app
+      #  target_label: msg
 
       - action: replace
         source_labels:
@@ -492,17 +495,17 @@ config:
 
     scrapeConfigs: |
       # See also https://github.com/grafana/loki/blob/master/production/ksonnet/promtail/scrape_config.libsonnet for reference
-      - job_name: monitoring/redis-exporter
-        pipeline_stages:
-          {{- toYaml .Values.config.snippets.pipelineStages | nindent 4 }}
-        kubernetes_sd_configs:
-          - role: pod
-        relabel_configs:
-          - source_labels:
-              - __meta_kubernetes_pod_label_app
-            regex: msg
-            action: replace
-            target_label: __tmp_pod_label_app
+      #- job_name: monitoring/redis-exporter
+      #  pipeline_stages:
+      #    {{- toYaml .Values.config.snippets.pipelineStages | nindent 4 }}
+      #  kubernetes_sd_configs:
+      #    - role: pod
+      #  relabel_configs:
+      #    - source_labels:
+      #        - __meta_kubernetes_pod_label_app
+      #      regex: msg
+      #      action: replace
+      #      target_label: __tmp_pod_label_app
 
 
       - job_name: kubernetes-pods
