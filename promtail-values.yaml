@@ -424,6 +424,7 @@ config:
   # @default -- See `values.yaml`
   snippets:
     pipelineStages:
+      - cri: {}
       - regex:
           expression: '(msg)=(.*)'
     common:
