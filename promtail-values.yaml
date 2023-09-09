@@ -483,12 +483,12 @@ config:
     extraScrapeConfigs:
       - job_name: redis-exporter
         pipeline_stages:
-        - match:
-            selector: '{job="redis-exporter"}'
+          - match:
+              selector: '{app="redis-exporter"}'
             stages:
-            - json:
-                expressions:
-                  - msg : msg
+              - json:
+                  expressions:
+                    - msg
 
     # -- You can put here any additional relabel_configs to "kubernetes-pods" job
     extraRelabelConfigs: []
