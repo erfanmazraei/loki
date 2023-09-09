@@ -427,6 +427,11 @@ config:
       - cri: {}
     common:
       - action: replace
+          source_labels:
+            - __meta_kubernetes_pod_label_app
+          target_label: msg
+
+      - action: replace
         source_labels:
           - __meta_kubernetes_pod_node_name
         target_label: node_name
@@ -492,12 +497,13 @@ config:
           {{- toYaml .Values.config.snippets.pipelineStages | nindent 4 }}
         kubernetes_sd_configs:
           - role: pod
-        - match:
-            selector: '{job="monitoring/redis-exporter"}'
-            stages:
-            - json:
-                experssions:
-                  - msg
+        relabel_configs:
+          - source_labels:
+              - __meta_kubernetes_pod_label_app
+            regex: msg
+            action: replace
+            target_label: __tmp_pod_label_app
+
 
       - job_name: kubernetes-pods
         pipeline_stages:
