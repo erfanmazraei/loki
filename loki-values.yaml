@@ -212,7 +212,7 @@ loki:
         kvstore:
           store: memberlist
       rule_path: /tmp/loki/scratch
-      alertmanager_url: https://alertmanager.xx
+      alertmanager_url: http://kube-prometheus-stack-alertmanager:9093
       external_url: https://alertmanager.xx
 
   # -- Check https://grafana.com/docs/loki/latest/configuration/#schema_config for more info on how to configure schemas
