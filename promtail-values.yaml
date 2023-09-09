@@ -426,10 +426,10 @@ config:
     pipelineStages:
       - cri: {}
     common:
-      #- action: replace
-      #  source_labels:
-      #    - __meta_kubernetes_pod_label_app
-      #  target_label: msg
+      - action: replace
+        source_labels:
+          - __meta_kubernetes_pod_label_app
+        target_label: msg
 
       - action: replace
         source_labels:
@@ -485,16 +485,7 @@ config:
 
     # -- You can put here any additional scrape configs you want to add to the config file.
     # @default -- empty
-    extraScrapeConfigs: |
-      - job_name: redis-exporter
-        pipeline_stages:
-        - match:
-            pipeline_name: "redis-exporter"
-            selector: '{app="redis-exporter"}'
-            action: keep
-            stages:
-            - regex:
-                expression: '*(msg)=(.*)*'
+    extraScrapeConfigs: ""
 
 
 
@@ -502,18 +493,18 @@ config:
     extraRelabelConfigs: []
 
     scrapeConfigs: |
-      # See also https://github.com/grafana/loki/blob/master/production/ksonnet/promtail/scrape_config.libsonnet for reference
-      #- job_name: monitoring/redis-exporter
-      #  pipeline_stages:
-      #    {{- toYaml .Values.config.snippets.pipelineStages | nindent 4 }}
-      #  kubernetes_sd_configs:
-      #    - role: pod
-      #  relabel_configs:
-      #    - source_labels:
-      #        - __meta_kubernetes_pod_label_app
-      #      regex: msg
-      #      action: replace
-      #      target_label: __tmp_pod_label_app
+       See also https://github.com/grafana/loki/blob/master/production/ksonnet/promtail/scrape_config.libsonnet for reference
+      - job_name: monitoring/redis-exporter
+        pipeline_stages:
+          {{- toYaml .Values.config.snippets.pipelineStages | nindent 4 }}
+        kubernetes_sd_configs:
+          - role: pod
+        relabel_configs:
+          - source_labels:
+              - __meta_kubernetes_pod_label_app
+            regex: '(msg)=(.*)'
+            action: replace
+            target_label: __tmp_pod_label_app
 
 
       - job_name: kubernetes-pods
