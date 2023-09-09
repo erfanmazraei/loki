@@ -235,7 +235,8 @@ extraVolumes: []
 extraVolumeMounts: []
 
 # Extra args for the Promtail container.
-extraArgs: []
+extraArgs:
+  -config.expand-env=true
 # -- Example:
 # -- extraArgs:
 # --   - -client.external-labels=hostname=$(HOSTNAME)
