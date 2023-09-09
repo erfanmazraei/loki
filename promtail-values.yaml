@@ -481,10 +481,10 @@ config:
     # -- You can put here any additional scrape configs you want to add to the config file.
     # @default -- empty
     extraScrapeConfigs: |
-      - job_name: redis-exporter
+      - job_name: monitoring/redis-exporter
         pipeline_stages:
         - match: |
-            selector: '{job="redis-exporter"}'
+            selector: '{job="monitoring/redis-exporter"}'
             stages:
             - json:
                 experssions:
