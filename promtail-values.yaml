@@ -235,8 +235,7 @@ extraVolumes: []
 extraVolumeMounts: []
 
 # Extra args for the Promtail container.
-extraArgs:
-  -config.expand-env=true
+extraArgs: []
 # -- Example:
 # -- extraArgs:
 # --   - -client.external-labels=hostname=$(HOSTNAME)
@@ -620,8 +619,7 @@ sidecar:
       # -- Docker image pull policy for sidecar config-reloader
       pullPolicy: IfNotPresent
     # Extra args for the config-reloader container.
-    extraArgs: 
-      -config.expand-env=true
+    extraArgs: []
     # -- Extra environment variables for sidecar config-reloader
     extraEnv: []
     # -- Extra environment variables from secrets or configmaps for sidecar config-reloader
