@@ -484,14 +484,12 @@ config:
       - job_name: monitoring/redis-exporter
         pipeline_stages:
           - cri: {}
-        kubernetes_sd_configs:
-          - role: pod
-        relabel_configs:
-          - source_labels:
-              - __meta_kubernetes_pod_label_app
-            regex: *
-            action: replace
-            target_label: msg
+        - match:
+            selector: '{job="monitoring/redis-exporter"}'
+            stages:
+            - json:
+                experssions:
+                  - msg
 
 
     # -- You can put here any additional relabel_configs to "kubernetes-pods" job
