@@ -425,14 +425,13 @@ config:
   snippets:
     pipelineStages:
       - cri: {}
-      - regex:
-          expression: '(msg)=(.*)'
     common:
       #- action: replace
       #  source_labels:
       #    - __meta_kubernetes_pod_label_app
       #  target_label: msg
-
+      - regex:
+          expression: '(msg)=(.*)'
       - action: replace
         source_labels:
           - __meta_kubernetes_pod_node_name
