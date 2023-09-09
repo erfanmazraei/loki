@@ -619,7 +619,8 @@ sidecar:
       # -- Docker image pull policy for sidecar config-reloader
       pullPolicy: IfNotPresent
     # Extra args for the config-reloader container.
-    extraArgs: []
+    extraArgs: 
+      -config.expand-env=true
     # -- Extra environment variables for sidecar config-reloader
     extraEnv: []
     # -- Extra environment variables from secrets or configmaps for sidecar config-reloader
