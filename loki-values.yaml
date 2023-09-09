@@ -1352,7 +1352,7 @@ compactor:
 # Configuration for the ruler
 ruler:
   # -- Specifies whether the ruler should be enabled
-  enabled: false
+  enabled: true
   # -- Kind of deployment [StatefulSet/Deployment]
   kind: Deployment
   # -- Number of replicas for the ruler
@@ -1423,83 +1423,83 @@ ruler:
   dnsConfig: {}
   persistence:
     # -- Enable creating PVCs which is required when using recording rules
-    enabled: false
+    enabled: true
     # -- Size of persistent disk
-    size: 10Gi
+    size: 1Gi
     # -- Storage class to be used.
     # If defined, storageClassName: <storageClass>.
     # If set to "-", storageClassName: "", which disables dynamic provisioning.
     # If empty or set to null, no storageClassName spec is
     # set, choosing the default provisioner (gp2 on AWS, standard on GKE, AWS, and OpenStack).
-    storageClass: null
+    storageClass: nfs-client
     # -- Annotations for ruler PVCs
     annotations: {}
   # -- Directories containing rules files
-  directories: {}
-    # tenant_foo:
-    #   rules1.txt: |
-    #     groups:
-    #       - name: should_fire
-    #         rules:
-    #           - alert: HighPercentageError
-    #             expr: |
-    #               sum(rate({app="foo", env="production"} |= "error" [5m])) by (job)
-    #                 /
-    #               sum(rate({app="foo", env="production"}[5m])) by (job)
-    #                 > 0.05
-    #             for: 10m
-    #             labels:
-    #               severity: warning
-    #             annotations:
-    #               summary: High error rate
-    #       - name: credentials_leak
-    #         rules:
-    #           - alert: http-credentials-leaked
-    #             annotations:
-    #               message: "{{ $labels.job }} is leaking http basic auth credentials."
-    #             expr: 'sum by (cluster, job, pod) (count_over_time({namespace="prod"} |~ "http(s?)://(\\w+):(\\w+)@" [5m]) > 0)'
-    #             for: 10m
-    #             labels:
-    #               severity: critical
-    #   rules2.txt: |
-    #     groups:
-    #       - name: example
-    #         rules:
-    #         - alert: HighThroughputLogStreams
-    #           expr: sum by(container) (rate({job=~"loki-dev/.*"}[1m])) > 1000
-    #           for: 2m
-    # tenant_bar:
-    #   rules1.txt: |
-    #     groups:
-    #       - name: should_fire
-    #         rules:
-    #           - alert: HighPercentageError
-    #             expr: |
-    #               sum(rate({app="foo", env="production"} |= "error" [5m])) by (job)
-    #                 /
-    #               sum(rate({app="foo", env="production"}[5m])) by (job)
-    #                 > 0.05
-    #             for: 10m
-    #             labels:
-    #               severity: warning
-    #             annotations:
-    #               summary: High error rate
-    #       - name: credentials_leak
-    #         rules:
-    #           - alert: http-credentials-leaked
-    #             annotations:
-    #               message: "{{ $labels.job }} is leaking http basic auth credentials."
-    #             expr: 'sum by (cluster, job, pod) (count_over_time({namespace="prod"} |~ "http(s?)://(\\w+):(\\w+)@" [5m]) > 0)'
-    #             for: 10m
-    #             labels:
-    #               severity: critical
-    #   rules2.txt: |
-    #     groups:
-    #       - name: example
-    #         rules:
-    #         - alert: HighThroughputLogStreams
-    #           expr: sum by(container) (rate({job=~"loki-dev/.*"}[1m])) > 1000
-    #           for: 2m
+  directories:
+    tenant_foo:
+      rules1.txt: |
+        groups:
+          - name: should_fire
+            rules:
+              - alert: HighPercentageError
+                expr: |
+                  sum(rate({app="foo", env="production"} |= "error" [5m])) by (job)
+                    /
+                  sum(rate({app="foo", env="production"}[5m])) by (job)
+                    > 0.05
+                for: 10m
+                labels:
+                  severity: warning
+                annotations:
+                  summary: High error rate
+          - name: credentials_leak
+            rules:
+              - alert: http-credentials-leaked
+                annotations:
+                  message: "{{ $labels.job }} is leaking http basic auth credentials."
+                expr: 'sum by (cluster, job, pod) (count_over_time({namespace="prod"} |~ "http(s?)://(\\w+):(\\w+)@" [5m]) > 0)'
+                for: 10m
+                labels:
+                  severity: critical
+      rules2.txt: |
+        groups:
+          - name: example
+            rules:
+            - alert: HighThroughputLogStreams
+              expr: sum by(container) (rate({job=~"loki-dev/.*"}[1m])) > 1000
+              for: 2m
+    tenant_bar:
+      rules1.txt: |
+        groups:
+          - name: should_fire
+            rules:
+              - alert: HighPercentageError
+                expr: |
+                  sum(rate({app="foo", env="production"} |= "error" [5m])) by (job)
+                    /
+                  sum(rate({app="foo", env="production"}[5m])) by (job)
+                    > 0.05
+                for: 10m
+                labels:
+                  severity: warning
+                annotations:
+                  summary: High error rate
+          - name: credentials_leak
+            rules:
+              - alert: http-credentials-leaked
+                annotations:
+                  message: "{{ $labels.job }} is leaking http basic auth credentials."
+                expr: 'sum by (cluster, job, pod) (count_over_time({namespace="prod"} |~ "http(s?)://(\\w+):(\\w+)@" [5m]) > 0)'
+                for: 10m
+                labels:
+                  severity: critical
+      rules2.txt: |
+        groups:
+          - name: example
+            rules:
+            - alert: HighThroughputLogStreams
+              expr: sum by(container) (rate({job=~"loki-dev/.*"}[1m])) > 1000
+              for: 2m
 
 # Configuration for the index-gateway
 indexGateway:
