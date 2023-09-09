@@ -102,6 +102,8 @@ loki:
           store: memberlist
 
     memberlist:
+      service:
+        publishNotReadyAddresses: false
       join_members:
         - {{ include "loki.fullname" . }}-memberlist
 
