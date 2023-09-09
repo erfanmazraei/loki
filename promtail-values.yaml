@@ -411,7 +411,7 @@ config:
   # Must be reference in `config.file` to configure `clients`
   # @default -- See `values.yaml`
   clients:
-    - url: http://loki-gateway/loki/api/v1/push
+    - url: http://loki-loki-distributed-gateway/loki/api/v1/push
   # -- Configures where Promtail will save it's positions file, to resume reading after restarts.
   # Must be referenced in `config.file` to configure `positions`
   positions:
@@ -480,7 +480,15 @@ config:
 
     # -- You can put here any additional scrape configs you want to add to the config file.
     # @default -- empty
-    extraScrapeConfigs: ""
+    extraScrapeConfigs:
+      - job_name: redis-exporter
+        pipeline_stages:
+          - match:
+              selector: '{job="redis-exporter"}'
+            stages:
+              - json:
+                  expressions:
+                    - msg
 
     # -- You can put here any additional relabel_configs to "kubernetes-pods" job
     extraRelabelConfigs: []
