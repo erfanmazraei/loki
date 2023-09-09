@@ -103,7 +103,7 @@ loki:
 
     memberlist:
       join_members:
-        - {{ include "loki.fullname" . }}-memberlist
+        - {{ include "loki.fullname" . }}-memberlist.monitoring.svc.cluster.local
 
     ingester:
       lifecycler:
