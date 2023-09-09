@@ -494,7 +494,7 @@ config:
             action: keep
             stages:
             - regex:
-                expression: '(msg)=(.*)'
+              expression: '(msg)=(.*)'
 
 
 
