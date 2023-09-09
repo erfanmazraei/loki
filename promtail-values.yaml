@@ -489,7 +489,9 @@ config:
       # See also https://github.com/grafana/loki/blob/master/production/ksonnet/promtail/scrape_config.libsonnet for reference
       - job_name: monitoring/redis-exporter
         pipeline_stages:
-          - cri: {}
+          {{- toYaml .Values.config.snippets.pipelineStages | nindent 4 }}
+        kubernetes_sd_configs:
+          - role: pod
         - match:
             selector: '{job="monitoring/redis-exporter"}'
             stages:
