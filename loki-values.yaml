@@ -212,8 +212,8 @@ loki:
         kvstore:
           store: memberlist
       rule_path: /tmp/loki/scratch
-      alertmanager_url: http://alertmanager-operated.monitoring.svc.cluster.local:9093
-      external_url: http://alertmanager-operated.monitoring.svc.cluster.local:9093
+      alertmanager_url: http://alertmanager-operated:9093
+      external_url: http://alertmanager-operated:9093
 
 
   # -- Check https://grafana.com/docs/loki/latest/configuration/#schema_config for more info on how to configure schemas
