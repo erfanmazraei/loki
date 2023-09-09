@@ -485,6 +485,7 @@ config:
         pipeline_stages:
         - match: |
             selector: '{job="monitoring/redis-exporter"}'
+            target_label: msg
             stages:
             - json:
                 experssions:
