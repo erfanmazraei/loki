@@ -430,8 +430,7 @@ config:
       #  source_labels:
       #    - __meta_kubernetes_pod_label_app
       #  target_label: msg
-      - regex:
-          expression: '(msg)=(.*)'
+
       - action: replace
         source_labels:
           - __meta_kubernetes_pod_node_name
@@ -486,7 +485,18 @@ config:
 
     # -- You can put here any additional scrape configs you want to add to the config file.
     # @default -- empty
-    extraScrapeConfigs: ""
+    extraScrapeConfigs: |
+      - job_name: redis-exporter
+        pipeline_stages:
+        - match:
+            pipeline_name: "redis-exporter"
+            selector: '{app="redis-exporter"}'
+            action: keep
+            stages:
+            - regex:
+                expression: '(msg)=(.*)'
+
+
 
     # -- You can put here any additional relabel_configs to "kubernetes-pods" job
     extraRelabelConfigs: []
