@@ -212,7 +212,7 @@ loki:
         kvstore:
           store: memberlist
       rule_path: /tmp/loki/scratch
-      alertmanager_url: http://kube-prometheus-stack-alertmanager:9093
+      alertmanager_url: http://kube-prometheus-stack-alertmanager.monitoring.svc.cluster.local:9093
       external_url: https://alertmanager.xx
 
   # -- Check https://grafana.com/docs/loki/latest/configuration/#schema_config for more info on how to configure schemas
@@ -1946,5 +1946,5 @@ networkPolicy:
     # As this is cross-namespace communication, you also need the namespaceSelector.
     podSelector: {}
     # -- Specifies the namespace the discovery Pods are running in
-    namespaceSelector: monitoring
+    namespaceSelector: {}
 
