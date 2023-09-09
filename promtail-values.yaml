@@ -427,9 +427,9 @@ config:
       - cri: {}
     common:
       - action: replace
-          source_labels:
-            - __meta_kubernetes_pod_label_app
-          target_label: msg
+        source_labels:
+          - __meta_kubernetes_pod_label_app
+        target_label: msg
 
       - action: replace
         source_labels:
