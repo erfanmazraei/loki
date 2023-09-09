@@ -1449,7 +1449,7 @@ ruler:
                 labels:
                   severity: warning
                 annotations:
-                  summary: "High error rate [{{ $labels.msg }}]"
+                  message: "{{ $labels.job }} is leaking http basic auth credentials{{ $labels.msg }}"
 #          - name: credentials_leak
 #            rules:
 #              - alert: http-credentials-leaked
