@@ -488,8 +488,6 @@ config:
     scrapeConfigs: |
       # See also https://github.com/grafana/loki/blob/master/production/ksonnet/promtail/scrape_config.libsonnet for reference
       - job_name: redis-exporter
-        kubernetes_sd_configs:
-          - role: pod
         pipeline_stages:
         - match:
             selector: '{app="redis-exporter"}'
@@ -497,8 +495,9 @@ config:
             - regex:
                 expression: ".*level=(?P<level>[a-zA-Z]+)"
             - labels:
-                level:
-
+                level:      
+        kubernetes_sd_configs:
+          - role: pod
         
       - job_name: kubernetes-pods
         pipeline_stages:
