@@ -425,6 +425,13 @@ config:
   snippets:
     pipelineStages:
       - cri: {}
+      - match:
+          selector: '{app="redis-exporter"}'
+          stages:
+          - regex:
+              expression: "^(?s)(?P<time>\\S+?) (?P<level>.*) (?P<msg>.*)$"
+          - output:
+              source: msg
     common:
       - action: replace
         source_labels:
@@ -487,18 +494,7 @@ config:
 
     scrapeConfigs: |
       # See also https://github.com/grafana/loki/blob/master/production/ksonnet/promtail/scrape_config.libsonnet for reference
-      - job_name: redis-exporter
-        pipeline_stages:
-        - match:
-            selector: '{app="redis-exporter"}'
-            stages:
-            - regex:
-                expression: ".*level=(?P<level>[a-zA-Z]+).*"
-            - labels:
-                level:      
-        kubernetes_sd_configs:
-          - role: pod
-        
+              
       - job_name: kubernetes-pods
         pipeline_stages:
           {{- toYaml .Values.config.snippets.pipelineStages | nindent 4 }}
