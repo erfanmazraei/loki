@@ -495,9 +495,9 @@ config:
             selector: '{app="redis-exporter"}'
             stages:
             - regex:
-                expression: /(?P<timestamp>[^\s]+)\s+time="(?P<time>[^"]+)"\s+level=(?P<level>[^\s]+)\s+msg="(?P<msg>[^"]+)"/
+                expression: ".*level=(?P<level>[a-zA-Z]+)"
             - labels:
-                msg: msg
+                level: level
 
         
       - job_name: kubernetes-pods
