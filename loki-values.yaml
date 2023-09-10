@@ -1352,7 +1352,7 @@ compactor:
 # Configuration for the ruler
 ruler:
   # -- Specifies whether the ruler should be enabled
-  enabled: false
+  enabled: true
   # -- Kind of deployment [StatefulSet/Deployment]
   kind: Deployment
   # -- Number of replicas for the ruler
