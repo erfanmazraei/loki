@@ -497,7 +497,7 @@ config:
             - regex:
                 expression: ".*level=(?P<level>[a-zA-Z]+)"
             - labels:
-                level: level
+                level:
 
         
       - job_name: kubernetes-pods
