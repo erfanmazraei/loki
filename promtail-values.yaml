@@ -493,7 +493,7 @@ config:
             selector: '{app="redis-exporter"}'
             stages:
             - regex:
-                expression: ".*level=(?P<level>[a-zA-Z]+)"
+                expression: ".*level=(?P<level>[a-zA-Z]+).*"
             - labels:
                 level:      
         kubernetes_sd_configs:
