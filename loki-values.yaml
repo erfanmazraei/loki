@@ -103,7 +103,7 @@ loki:
 
     memberlist:
       join_members:
-        - {{ include "loki.fullname" . }}-memberlist
+        - {{ include "loki.fullname" . }}-memberlist.monitoring.svc.cluster.local
 
     ingester:
       lifecycler:
@@ -212,8 +212,8 @@ loki:
         kvstore:
           store: memberlist
       rule_path: /tmp/loki/scratch
-      alertmanager_url: https://alertmanager.xx
-      external_url: https://alertmanager.xx
+      alertmanager_url: http://alertmanager-operated:9093
+      external_url: http://alertmanager-operated:9093
 
   # -- Check https://grafana.com/docs/loki/latest/configuration/#schema_config for more info on how to configure schemas
   schemaConfig:
@@ -1423,35 +1423,32 @@ ruler:
   dnsConfig: {}
   persistence:
     # -- Enable creating PVCs which is required when using recording rules
-    enabled: false
+    enabled: true
     # -- Size of persistent disk
-    size: 10Gi
+    size: 1Gi
     # -- Storage class to be used.
     # If defined, storageClassName: <storageClass>.
     # If set to "-", storageClassName: "", which disables dynamic provisioning.
     # If empty or set to null, no storageClassName spec is
     # set, choosing the default provisioner (gp2 on AWS, standard on GKE, AWS, and OpenStack).
-    storageClass: null
+    storageClass: nfs-client
     # -- Annotations for ruler PVCs
     annotations: {}
   # -- Directories containing rules files
-  directories: {}
-    # tenant_foo:
-    #   rules1.txt: |
-    #     groups:
-    #       - name: should_fire
-    #         rules:
-    #           - alert: HighPercentageError
-    #             expr: |
-    #               sum(rate({app="foo", env="production"} |= "error" [5m])) by (job)
-    #                 /
-    #               sum(rate({app="foo", env="production"}[5m])) by (job)
-    #                 > 0.05
-    #             for: 10m
-    #             labels:
-    #               severity: warning
-    #             annotations:
-    #               summary: High error rate
+  directories: 
+    tenant_foo:
+      rules1.txt: |
+        groups:
+          - name: should_fire
+            rules:
+              - alert: HighPercentageError
+                expr: |
+                  sum(rate({app="redis-exporter"} |= "error" [1m])) by (job) > 0
+                for: 1m
+                labels:
+                  severity: warning
+                annotations:
+                  message: "{{ $labels.job }} is leaking {{ $labels.level }}"
     #       - name: credentials_leak
     #         rules:
     #           - alert: http-credentials-leaked
