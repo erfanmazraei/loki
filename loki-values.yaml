@@ -1443,7 +1443,7 @@ ruler:
             rules:
               - alert: HighPercentageError
                 expr: |
-                  sum(rate({app="redis-exporter"} |= "error" [1m])) by (job) > 0
+                  sum(rate({app="redis-exporter"} |= "redis" [1m])) by (job) > 0
                 for: 1m
                 labels:
                   severity: warning
