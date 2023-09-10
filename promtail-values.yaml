@@ -497,7 +497,7 @@ config:
             - regex:
                 expression: /(?P<timestamp>[^\s]+)\s+time="(?P<time>[^"]+)"\s+level=(?P<level>[^\s]+)\s+msg="(?P<msg>[^"]+)"/
             - labels:
-                msg:
+                msg: msg
 
         
       - job_name: kubernetes-pods
