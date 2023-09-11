@@ -14,24 +14,83 @@ second way:
             helm show values grafana/loki-distributed > /tmp/loki-values.yaml or use loki-values.yaml file in this directory
     
     step 2:
+        in loki-values.yaml about line 106 maybe you need change these lines:
+            memberlist:
+                join_members:
+                    - {{ include "loki.fullname" . }}-memberlist (change to : - {{ include "loki.fullname" . }}-memberlist.monitoring.svc.cluster.local)
+
+    step 3:
+        in loki-values.yaml about line 215 you must set this ( alertmanager service address ) :
+            alertmanager_url: http://alertmanager-operated:9093
+            external_url: http://alertmanager-operated:9093
+
+
+    step 4:
+        in loki-values.yaml about line 1353 you must set this :
+            ruler:
+                enabled: true
+        
+    step 5:
+        in loki-values.yaml about line 1424 you must set this :
+            persistence:
+                enabled: true
+                size: 1Gi
+                storageClass: nfs-client
+        
+    step 6:
+        in loki-values.yaml about line 1438 you must set this for trigger allert:
+          directories: 
+            tenant_foo:
+              rules1.txt: |
+                groups:
+                  - name: should_fire
+                    rules:
+                      - alert: HighPercentageError
+                        expr: |
+                          sum(rate({app="redis-exporter"} |= "redis" [1m])) by (job) > 0
+                        for: 1m
+                        labels:
+                          severity: warning
+                        annotations:
+                          message: "{{ $labels.job }} is leaking {{ $labels.level }}"
+
+    step 7:
         setup or upgrade loki:
             helm upgrade --install loki grafana/loki-distributed --namespace monitoring --set loki.persistence.enabled=true,loki.persistence.storageClassName=nfs-client,loki.persistence.size=1Gi -f loki-values.yaml
 
-    step 3:
+    step 8:
         use this command for get values of promtail:
             helm show values grafana/promtail > /tmp/promtail-values.yaml or use promtail-values.yaml file in this directory
 
-    step 4:
-        edit line 414 and set loki gateway address:
+    step 9:
+        in promtail-values.yaml edit line 414 and set loki gateway address:
             clients:
                 - url: http://loki-loki-distributed-gateway/loki/api/v1/push
 
-    step 5:
+    step 10:
+        in promtail-values.yaml edit line 425 and set your match after cri{} :
+            for example i have this log :
+                 time="2023-09-10T18:18:44Z" level=error msg="Couldn't connect to redis instance (redis://redis-clusterip-service.wodio.svc.cluster.local:6379)"
+                    this is my match for get time and msg and level as labels :
+                      snippets:
+                        pipelineStages:
+                          - cri: {}
+                          - match:
+                              selector: '{app="redis-exporter"}'
+                              stages:
+                              - regex:
+                                  expression: "^(?s)(?P<time>\\S+?) (?P<level>\\S+?) (?P<msg>.*)$"
+                              - labels:
+                                  time:
+                                  level:
+                                  msg:
+
+
+
+    step 11:
         setup or upgrade promtail:
             helm upgrade --install promtail grafana/promtail --namespace=monitoring -f promtail-values.yaml
 
-    step 7:
+    step 12:
         add loki to grafana as a datasource
 
-
-    
