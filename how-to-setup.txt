@@ -53,6 +53,15 @@ second way:
                           severity: warning
                         annotations:
                           message: "{{ $labels.job }} is leaking {{ $labels.level }}"
+                      - alert: HighPercentageError2
+                        expr: |
+                          sum(rate({app="api-web-deployment"} |= "error" [1m])) by (job) > 0
+                        for: 1s
+                        labels:
+                          severity: warning
+                        annotations:
+                          message: "{{ $labels.job }} is leaking {{ $labels.level }}"
+
 
     step 7:
         setup or upgrade loki:
