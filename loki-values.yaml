@@ -1459,7 +1459,7 @@ ruler:
                   message: "gke {{ $labels.job }} is leaking {{ $labels.level }}"
               - alert: HighPercentageError3
                 expr: |
-                  sum(rate({app="loki-distributed"} |= "error" [5m])) by (job) > 0
+                  sum(rate({app="api-web-deployment"} |= "error" [5m])) by (job) > 0
                 for: 1s
                 labels:
                   severity: warning
