@@ -1464,7 +1464,7 @@ ruler:
                 labels:
                   severity: warning
                 annotations:
-                  message: "loki {{ $labels.job }} is leaking {{ $labels.level }}"
+                  message: "api {{ $labels.job }} is leaking {{ $labels.level }}"
   
     #       - name: credentials_leak
     #         rules:
