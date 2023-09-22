@@ -1442,13 +1442,13 @@ ruler:
           - name: should_fire
             rules:
               - alert: HighPercentageError
-              expr: |
-                sum(rate({app="redis-exporter"} |= "error" [1m])) by (job) > 0
-              for: 1s
-              labels:
-                severity: warning
-              annotations:
-                message: "redis {{ $labels.job }} is leaking {{ $labels.level }}"
+                expr: |
+                  sum(rate({app="redis-exporter"} |= "error" [1m])) by (job) > 0
+                for: 1s
+                labels:
+                  severity: warning
+                annotations:
+                  message: "redis {{ $labels.job }} is leaking {{ $labels.level }}"
 
     #       - name: credentials_leak
     #         rules:
