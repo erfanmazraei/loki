@@ -438,6 +438,11 @@ config:
     common:
       - action: replace
         source_labels:
+          - msg
+        target_label:
+          - msg
+      - action: replace
+        source_labels:
           - __meta_kubernetes_pod_node_name
         target_label: node_name
       - action: replace
