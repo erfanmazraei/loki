@@ -1448,7 +1448,7 @@ ruler:
                 labels:
                   severity: warning
                 annotations:
-                  message: "api {{ $labels.job }} is leaking {{ $labels.level }}"
+                  message: "msg : {{ $labels.msg }} -- level : {{ $labels.level }} -- job: {{ $labels.job }} "
   
     #       - name: credentials_leak
     #         rules:
