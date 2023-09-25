@@ -85,7 +85,7 @@ second way:
                         pipelineStages:
                           - cri: {}
                           - match:
-                              selector: '{app="redis-exporter"}'
+                              selector: '{app="api-web-deployment"}'
                               stages:
                               - regex:
                                   expression: "^(?s)(?P<time>\\S+?) (?P<level>\\S+?) (?P<msg>.*)$"
