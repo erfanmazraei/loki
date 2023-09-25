@@ -431,16 +431,11 @@ config:
           - regex:
               expression: "^(?s)(?P<time>\\S+?) (?P<level>\\S+?) (?P<msg>.*)$"
           - labels:
-              time:
-              level:
-              msg:
+              time: time
+              level: level
+              msg: msg
 
     common:
-      - action: replace
-        source_labels:
-          - msg
-        target_label:
-          - msg
       - action: replace
         source_labels:
           - __meta_kubernetes_pod_node_name
