@@ -1441,23 +1441,7 @@ ruler:
         groups:
           - name: should_fire
             rules:
-              - alert: HighPercentageError
-                expr: |
-                  sum(rate({app="redis-exporter"} |= "error" [1m])) by (job) > 0
-                for: 1s
-                labels:
-                  severity: warning
-                annotations:
-                  message: "redis {{ $labels.job }} is leaking {{ $labels.level }}"
-              - alert: HighPercentageError2
-                expr: |
-                  sum(rate({app="gke-metrics-agent"} |= "error" [5m])) by (job) > 0
-                for: 1s
-                labels:
-                  severity: warning
-                annotations:
-                  message: "gke {{ $labels.job }} is leaking {{ $labels.level }}"
-              - alert: HighPercentageError3
+              - alert: api-web
                 expr: |
                   sum(rate({app="api-web-deployment"} |= "error" [5m])) by (job) > 0
                 for: 1s
