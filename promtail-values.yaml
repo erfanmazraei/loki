@@ -436,6 +436,9 @@ config:
               msg: msg
 
     common:
+      - action: keep
+        source_labels:
+          - msg
       - action: replace
         source_labels:
           - __meta_kubernetes_pod_node_name
