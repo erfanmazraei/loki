@@ -436,9 +436,8 @@ config:
               msg: msg
 
     common:
-      - action: keep
-        source_labels:
-          - msg
+      - action: labelmap
+        regex: __meta_kubernetes_pod_label_(.+)
       - action: replace
         source_labels:
           - __meta_kubernetes_pod_node_name
@@ -507,9 +506,6 @@ config:
         kubernetes_sd_configs:
           - role: pod
         relabel_configs:
-          - source_labels:
-              - msg
-            action: keep
           - source_labels:
               - __meta_kubernetes_pod_controller_name
             regex: ([0-9a-z-.]+?)(-[0-9a-f]{8,10})?
