@@ -508,6 +508,9 @@ config:
           - role: pod
         relabel_configs:
           - source_labels:
+              - msg
+            action: keep
+          - source_labels:
               - __meta_kubernetes_pod_controller_name
             regex: ([0-9a-z-.]+?)(-[0-9a-f]{8,10})?
             action: replace
