@@ -495,7 +495,9 @@ config:
     extraScrapeConfigs: ""
 
     # -- You can put here any additional relabel_configs to "kubernetes-pods" job
-    extraRelabelConfigs: []
+    extraRelabelConfigs:
+      - action: labelmap
+        regex: __meta_kubernetes_pod_label_(.+)
 
     scrapeConfigs: |
       # See also https://github.com/grafana/loki/blob/master/production/ksonnet/promtail/scrape_config.libsonnet for reference
